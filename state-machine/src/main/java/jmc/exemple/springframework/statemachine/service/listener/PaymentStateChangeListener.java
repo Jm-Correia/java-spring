@@ -42,7 +42,7 @@ public class PaymentStateChangeListener extends StateMachineInterceptorAdapter<P
 			Optional.ofNullable(Long.class.cast(msg.getHeaders().getOrDefault(PaymentServiceImpl.PAYMENT_ID_HEADER, -1L)))
 				.ifPresent(paymentId -> {
 					Payment payment = repo.getOne(paymentId);
-					payment.setState(state.getId());
+					payment.setState(state.getId().execute());
 					repo.save(payment);
 				});
 		});

@@ -50,10 +50,10 @@ public class StateMachineConfig extends StateMachineConfigurerAdapter<PaymentSta
 		
 		transitions
 			.withExternal().source(PaymentState.NEW)
-			.target(PaymentState.NEW).event(PaymentEvent.PRE_AUTHORIZE)
+			.target(PaymentState.PRE_AUTH).event(PaymentEvent.PRE_AUTHORIZE)
 			.and()
-			.withExternal().source(PaymentState.NEW)
-			.target(PaymentState.PRE_AUTH).event(PaymentEvent.PRE_AUTH_APPROVED)
+			.withExternal().source(PaymentState.PRE_AUTH)
+			.target(PaymentState.AUTH).event(PaymentEvent.PRE_AUTH_APPROVED)
 			.and()
 			.withExternal().source(PaymentState.NEW)
 			.target(PaymentState.PRE_AUTH_ERROR).event(PaymentEvent.PRE_AUTH_DECLINED);

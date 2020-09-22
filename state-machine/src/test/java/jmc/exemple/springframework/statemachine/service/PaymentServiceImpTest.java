@@ -52,13 +52,19 @@ class PaymentServiceImpTest {
 		
 		StateMachine<PaymentState, PaymentEvent> sm = service.preAuth(savedPayment.getId());
 		
-		System.out.println("state: " + sm);
+		System.out.println("state 1: " + sm.getState().getId());
 
 		Payment preAuthedPayment =  repo.getOne(savedPayment.getId());
 		
 		System.out.println(String.format("Objeto Payment: %s", preAuthedPayment.toString()));
 		
-		assertEquals(sm, preAuthedPayment.getId());
+		StateMachine<PaymentState, PaymentEvent> nextState = service.authorizePayment(savedPayment.getId());
+		
+		System.out.println("state 2: " + nextState.getState().getId());
+		
+		Payment authPayment = repo.getOne(savedPayment.getId());		
+		
+		assertEquals(PaymentState.AUTH, authPayment.getState());
 	}
 
 }
